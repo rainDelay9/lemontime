@@ -25,7 +25,7 @@ export class LemonTimeStack extends Stack {
                 runtime: lambda.Runtime.PYTHON_3_9,
                 handler: 'post.handler',
                 code: lambda.Code.fromAsset(
-                    path.join(__dirname, '../lambda/routes')
+                    path.join(__dirname, '../lambda/routes/timers/post')
                 ),
             }
         );
@@ -37,6 +37,9 @@ export class LemonTimeStack extends Stack {
                 dataTraceEnabled: true,
                 tracingEnabled: true,
             },
+            endpointConfiguration: {
+                types: [apigw.EndpointType.REGIONAL],
+            },
         });
 
         const timers = api.root.addResource('timers');
@@ -44,5 +47,9 @@ export class LemonTimeStack extends Stack {
             'POST',
             new apigw.LambdaIntegration(postTimersBackend, {})
         );
+
+        const deployment = new apigw.Deployment(this, 'Deployment', {
+            api,
+        });
     }
 }
