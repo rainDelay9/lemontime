@@ -1,0 +1,48 @@
+import { Stack, StackProps, Construct } from 'monocdk';
+import * as apigw from 'monocdk/aws-apigateway';
+import * as lambda from 'monocdk/aws-lambda';
+import * as path from 'path';
+
+export class LemonTimeStack extends Stack {
+    constructor(scope: Construct, id: string, props?: StackProps) {
+        super(scope, id, props);
+
+        // The code that defines your stack goes here
+
+        // example resource
+        // const queue = new sqs.Queue(this, 'CdkQueue', {
+        //   visibilityTimeout: cdk.Duration.seconds(300)
+        // });
+
+        // ROUTES
+
+        // POST /timers
+
+        const postTimersBackend = new lambda.Function(
+            this,
+            'post-timers-function',
+            {
+                runtime: lambda.Runtime.PYTHON_3_9,
+                handler: 'post.handler',
+                code: lambda.Code.fromAsset(
+                    path.join(__dirname, '../lambda/routes')
+                ),
+            }
+        );
+
+        // API GATEWAY
+
+        const api = new apigw.RestApi(this, 'api-gateway', {
+            deployOptions: {
+                dataTraceEnabled: true,
+                tracingEnabled: true,
+            },
+        });
+
+        const timers = api.root.addResource('timers');
+        timers.addMethod(
+            'POST',
+            new apigw.LambdaIntegration(postTimersBackend, {})
+        );
+    }
+}

@@ -1,0 +1,539 @@
+{
+  "version": "17.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "CdkStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "CdkStack.template.json",
+        "validateOnSynth": false
+      },
+      "metadata": {
+        "/CdkStack": [
+          {
+            "type": "aws:cdk:asset",
+            "data": {
+              "path": "asset.edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613",
+              "id": "edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613",
+              "packaging": "zip",
+              "sourceHash": "edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613",
+              "s3BucketParameter": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3Bucket7D150ECB",
+              "s3KeyParameter": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3VersionKeyC954805B",
+              "artifactHashParameter": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613ArtifactHash96653458"
+            },
+            "trace": [
+              "ConstructNode.addMetadata (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\construct-compat.ts:453:92)",
+              "LegacyStackSynthesizer.doAddFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:186:23)",
+              "LegacyStackSynthesizer.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:86:19)",
+              "LemonTimeStack.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack.ts:683:29)",
+              "F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:91:53",
+              "withoutDeprecationWarnings (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:218:12)",
+              "LegacyStackSynthesizer.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:91:14)",
+              "new Asset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-s3-assets\\lib\\asset.ts:152:40)",
+              "AssetCode.bind (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\code.ts:285:20)",
+              "new Function (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\function.ts:699:29)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:21:35)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/post-timers-function/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "posttimersfunctionServiceRole020A0125",
+            "trace": [
+              "new Role (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-iam\\lib\\role.ts:358:18)",
+              "new Function (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\function.ts:679:31)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:21:35)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/post-timers-function/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "posttimersfunctionF553519A",
+            "trace": [
+              "new Function (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\function.ts:762:35)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:21:35)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613/S3Bucket": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3Bucket7D150ECB",
+            "trace": [
+              "new FileAssetParameters (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\asset-parameters.ts:16:32)",
+              "LegacyStackSynthesizer.doAddFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:169:16)",
+              "LegacyStackSynthesizer.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:86:19)",
+              "LemonTimeStack.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack.ts:683:29)",
+              "F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:91:53",
+              "withoutDeprecationWarnings (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:218:12)",
+              "LegacyStackSynthesizer.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:91:14)",
+              "new Asset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-s3-assets\\lib\\asset.ts:152:40)",
+              "AssetCode.bind (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\code.ts:285:20)",
+              "new Function (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\function.ts:699:29)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:21:35)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613/S3VersionKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3VersionKeyC954805B",
+            "trace": [
+              "new FileAssetParameters (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\asset-parameters.ts:21:31)",
+              "LegacyStackSynthesizer.doAddFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:169:16)",
+              "LegacyStackSynthesizer.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:86:19)",
+              "LemonTimeStack.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack.ts:683:29)",
+              "F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:91:53",
+              "withoutDeprecationWarnings (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:218:12)",
+              "LegacyStackSynthesizer.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:91:14)",
+              "new Asset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-s3-assets\\lib\\asset.ts:152:40)",
+              "AssetCode.bind (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\code.ts:285:20)",
+              "new Function (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\function.ts:699:29)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:21:35)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613/ArtifactHash": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613ArtifactHash96653458",
+            "trace": [
+              "new FileAssetParameters (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\asset-parameters.ts:26:34)",
+              "LegacyStackSynthesizer.doAddFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:169:16)",
+              "LegacyStackSynthesizer.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:86:19)",
+              "LemonTimeStack.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack.ts:683:29)",
+              "F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:91:53",
+              "withoutDeprecationWarnings (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:218:12)",
+              "LegacyStackSynthesizer.addFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:91:14)",
+              "new Asset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-s3-assets\\lib\\asset.ts:152:40)",
+              "AssetCode.bind (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\code.ts:285:20)",
+              "new Function (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\function.ts:699:29)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:21:35)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewayE40D7439",
+            "trace": [
+              "new RestApi (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:741:22)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:35:21)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/CloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewayCloudWatchRoleA0B5DA79",
+            "trace": [
+              "new Role (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-iam\\lib\\role.ts:358:18)",
+              "RestApi._configureCloudWatchRole (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:523:18)",
+              "new RestApi (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:759:12)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:35:21)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/Account": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewayAccount03E7FF8C",
+            "trace": [
+              "RestApi._configureCloudWatchRole (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:528:30)",
+              "new RestApi (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:759:12)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:35:21)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewayDeployment695C21F2ec5b27d1af203a5ad29e84c1ef60ac1e",
+            "trace": [
+              "new Deployment (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\deployment.ts:75:21)",
+              "RestApi._configureDeployment (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:556:32)",
+              "new RestApi (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:762:10)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:35:21)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewayDeploymentStageprodADE8B10E",
+            "trace": [
+              "new Stage (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\stage.ts:242:22)",
+              "RestApi._configureDeployment (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:566:30)",
+              "new RestApi (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:762:10)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:35:21)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewayEndpointBC4313FB",
+            "trace": [
+              "RestApi._configureDeployment (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:571:7)",
+              "new RestApi (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:762:10)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:35:21)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/Default/timers/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewaytimers9D6D8363",
+            "trace": [
+              "new Resource (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\resource.ts:446:22)",
+              "RootResource.addResource (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\resource.ts:183:12)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:42:33)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/Default/timers/POST/ApiPermission.CdkStackapigatewayB4CBFC0D.POST..timers": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewaytimersPOSTApiPermissionCdkStackapigatewayB4CBFC0DPOSTtimers8D771F07",
+            "trace": [
+              "Function.addPermission (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\function-base.ts:355:5)",
+              "LambdaIntegration.bind (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\integrations\\lambda.ts:64:18)",
+              "new Method (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\method.ts:204:36)",
+              "Resource.addMethod (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\resource.ts:187:12)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:43:16)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/Default/timers/POST/ApiPermission.Test.CdkStackapigatewayB4CBFC0D.POST..timers": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewaytimersPOSTApiPermissionTestCdkStackapigatewayB4CBFC0DPOSTtimersFCE8E359",
+            "trace": [
+              "Function.addPermission (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-lambda\\lib\\function-base.ts:355:5)",
+              "LambdaIntegration.bind (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\integrations\\lambda.ts:72:20)",
+              "new Method (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\method.ts:204:36)",
+              "Resource.addMethod (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\resource.ts:187:12)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:43:16)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/api-gateway/Default/timers/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "apigatewaytimersPOST55F924E0",
+            "trace": [
+              "new Method (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\method.ts:222:22)",
+              "Resource.addMethod (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\resource.ts:187:12)",
+              "new LemonTimeStack (F:\\personal\\lemon\\lemontime\\src\\lib\\cdk-stack.ts:43:16)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\bin\\cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Module.m._compile (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1056:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Object.require.extensions.<computed> [as .ts] (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\index.ts:1059:12)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "main (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:198:14)",
+              "Object.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\ts-node\\src\\bin.ts:288:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1101:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)",
+              "Module.load (node:internal/modules/cjs/loader:981:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:822:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/CdkStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata",
+            "trace": [
+              "new MetadataResource (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\metadata-resource.ts:22:24)",
+              "F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:166:5",
+              "visit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:231:5)",
+              "visit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:227:5)",
+              "injectMetadataResources (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:157:3)",
+              "Object.synthesize (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:18:3)",
+              "App.synth (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stage.ts:180:23)",
+              "process.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\app.ts:131:45)",
+              "Object.onceWrapper (node:events:510:26)",
+              "process.emit (node:events:390:28)",
+              "process.emit (node:domain:475:12)",
+              "process.emit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\source-map-support\\source-map-support.js:516:21)"
+            ]
+          }
+        ],
+        "/CdkStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable",
+            "trace": [
+              "new MetadataResource (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\metadata-resource.ts:31:27)",
+              "F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:166:5",
+              "visit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:231:5)",
+              "visit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:227:5)",
+              "injectMetadataResources (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:157:3)",
+              "Object.synthesize (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:18:3)",
+              "App.synth (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stage.ts:180:23)",
+              "process.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\app.ts:131:45)",
+              "Object.onceWrapper (node:events:510:26)",
+              "process.emit (node:events:390:28)",
+              "process.emit (node:domain:475:12)",
+              "process.emit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\source-map-support\\source-map-support.js:516:21)"
+            ]
+          }
+        ]
+      },
+      "displayName": "CdkStack"
+    }
+  }
+}
