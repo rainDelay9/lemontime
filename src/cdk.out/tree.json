@@ -103,7 +103,7 @@
                   "aws:cdk:cloudformation:props": {
                     "code": {
                       "s3Bucket": {
-                        "Ref": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3Bucket7D150ECB"
+                        "Ref": "AssetParameters5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54S3Bucket0A6B7812"
                       },
                       "s3Key": {
                         "Fn::Join": [
@@ -116,7 +116,7 @@
                                   "Fn::Split": [
                                     "||",
                                     {
-                                      "Ref": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3VersionKeyC954805B"
+                                      "Ref": "AssetParameters5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54S3VersionKey7257A37B"
                                     }
                                   ]
                                 }
@@ -129,7 +129,7 @@
                                   "Fn::Split": [
                                     "||",
                                     {
-                                      "Ref": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3VersionKeyC954805B"
+                                      "Ref": "AssetParameters5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54S3VersionKey7257A37B"
                                     }
                                   ]
                                 }
@@ -164,13 +164,13 @@
             "id": "AssetParameters",
             "path": "CdkStack/AssetParameters",
             "children": {
-              "edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613": {
-                "id": "edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613",
-                "path": "CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613",
+              "5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54": {
+                "id": "5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54",
+                "path": "CdkStack/AssetParameters/5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54",
                 "children": {
                   "S3Bucket": {
                     "id": "S3Bucket",
-                    "path": "CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613/S3Bucket",
+                    "path": "CdkStack/AssetParameters/5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54/S3Bucket",
                     "constructInfo": {
                       "fqn": "monocdk.CfnParameter",
                       "version": "1.153.1"
@@ -178,7 +178,7 @@
                   },
                   "S3VersionKey": {
                     "id": "S3VersionKey",
-                    "path": "CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613/S3VersionKey",
+                    "path": "CdkStack/AssetParameters/5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54/S3VersionKey",
                     "constructInfo": {
                       "fqn": "monocdk.CfnParameter",
                       "version": "1.153.1"
@@ -186,7 +186,7 @@
                   },
                   "ArtifactHash": {
                     "id": "ArtifactHash",
-                    "path": "CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613/ArtifactHash",
+                    "path": "CdkStack/AssetParameters/5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54/ArtifactHash",
                     "constructInfo": {
                       "fqn": "monocdk.CfnParameter",
                       "version": "1.153.1"
@@ -331,7 +331,7 @@
                           "Ref": "apigatewayE40D7439"
                         },
                         "deploymentId": {
-                          "Ref": "apigatewayDeployment695C21F2ec5b27d1af203a5ad29e84c1ef60ac1e"
+                          "Ref": "apigatewayDeployment695C21F253d324dc0a82ff49d71e1a9d22a3a637"
                         },
                         "methodSettings": [
                           {
@@ -420,15 +420,7 @@
                                       {
                                         "Ref": "AWS::Partition"
                                       },
-                                      ":execute-api:",
-                                      {
-                                        "Ref": "AWS::Region"
-                                      },
-                                      ":",
-                                      {
-                                        "Ref": "AWS::AccountId"
-                                      },
-                                      ":",
+                                      ":execute-api:eu-central-1:097585043572:",
                                       {
                                         "Ref": "apigatewayE40D7439"
                                       },
@@ -469,15 +461,7 @@
                                       {
                                         "Ref": "AWS::Partition"
                                       },
-                                      ":execute-api:",
-                                      {
-                                        "Ref": "AWS::Region"
-                                      },
-                                      ":",
-                                      {
-                                        "Ref": "AWS::AccountId"
-                                      },
-                                      ":",
+                                      ":execute-api:eu-central-1:097585043572:",
                                       {
                                         "Ref": "apigatewayE40D7439"
                                       },
@@ -516,11 +500,7 @@
                                         {
                                           "Ref": "AWS::Partition"
                                         },
-                                        ":apigateway:",
-                                        {
-                                          "Ref": "AWS::Region"
-                                        },
-                                        ":lambda:path/2015-03-31/functions/",
+                                        ":apigateway:eu-central-1:lambda:path/2015-03-31/functions/",
                                         {
                                           "Fn::GetAtt": [
                                             "posttimersfunctionF553519A",
@@ -573,14 +553,6 @@
                 "path": "CdkStack/CDKMetadata/Default",
                 "constructInfo": {
                   "fqn": "monocdk.CfnResource",
-                  "version": "1.153.1"
-                }
-              },
-              "Condition": {
-                "id": "Condition",
-                "path": "CdkStack/CDKMetadata/Condition",
-                "constructInfo": {
-                  "fqn": "monocdk.CfnCondition",
                   "version": "1.153.1"
                 }
               }

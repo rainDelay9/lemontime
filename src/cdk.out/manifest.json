@@ -9,7 +9,7 @@
     },
     "CdkStack": {
       "type": "aws:cloudformation:stack",
-      "environment": "aws://unknown-account/unknown-region",
+      "environment": "aws://097585043572/eu-central-1",
       "properties": {
         "templateFile": "CdkStack.template.json",
         "validateOnSynth": false
@@ -19,13 +19,13 @@
           {
             "type": "aws:cdk:asset",
             "data": {
-              "path": "asset.edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613",
-              "id": "edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613",
+              "path": "asset.5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54",
+              "id": "5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54",
               "packaging": "zip",
-              "sourceHash": "edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613",
-              "s3BucketParameter": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3Bucket7D150ECB",
-              "s3KeyParameter": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3VersionKeyC954805B",
-              "artifactHashParameter": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613ArtifactHash96653458"
+              "sourceHash": "5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54",
+              "s3BucketParameter": "AssetParameters5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54S3Bucket0A6B7812",
+              "s3KeyParameter": "AssetParameters5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54S3VersionKey7257A37B",
+              "artifactHashParameter": "AssetParameters5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54ArtifactHashAB7A845A"
             },
             "trace": [
               "ConstructNode.addMetadata (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\construct-compat.ts:453:92)",
@@ -111,10 +111,10 @@
             ]
           }
         ],
-        "/CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613/S3Bucket": [
+        "/CdkStack/AssetParameters/5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54/S3Bucket": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3Bucket7D150ECB",
+            "data": "AssetParameters5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54S3Bucket0A6B7812",
             "trace": [
               "new FileAssetParameters (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\asset-parameters.ts:16:32)",
               "LegacyStackSynthesizer.doAddFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:169:16)",
@@ -146,10 +146,10 @@
             ]
           }
         ],
-        "/CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613/S3VersionKey": [
+        "/CdkStack/AssetParameters/5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54/S3VersionKey": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613S3VersionKeyC954805B",
+            "data": "AssetParameters5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54S3VersionKey7257A37B",
             "trace": [
               "new FileAssetParameters (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\asset-parameters.ts:21:31)",
               "LegacyStackSynthesizer.doAddFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:169:16)",
@@ -181,10 +181,10 @@
             ]
           }
         ],
-        "/CdkStack/AssetParameters/edc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613/ArtifactHash": [
+        "/CdkStack/AssetParameters/5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54/ArtifactHash": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "AssetParametersedc53576f202a6d03477d77a0dd5b228f74f57330839d17c570b855236063613ArtifactHash96653458",
+            "data": "AssetParameters5ca28274702543ab2649046755f5720c368e7246f6603536620cc6f78c09cc54ArtifactHashAB7A845A",
             "trace": [
               "new FileAssetParameters (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\asset-parameters.ts:26:34)",
               "LegacyStackSynthesizer.doAddFileAsset (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stack-synthesizers\\legacy.ts:169:16)",
@@ -300,7 +300,7 @@
         "/CdkStack/api-gateway/Deployment/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "apigatewayDeployment695C21F2ec5b27d1af203a5ad29e84c1ef60ac1e",
+            "data": "apigatewayDeployment695C21F253d324dc0a82ff49d71e1a9d22a3a637",
             "trace": [
               "new Deployment (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\deployment.ts:75:21)",
               "RestApi._configureDeployment (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\aws-apigateway\\lib\\restapi.ts:556:32)",
@@ -498,26 +498,6 @@
             "data": "CDKMetadata",
             "trace": [
               "new MetadataResource (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\metadata-resource.ts:22:24)",
-              "F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:166:5",
-              "visit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:231:5)",
-              "visit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:227:5)",
-              "injectMetadataResources (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:157:3)",
-              "Object.synthesize (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:18:3)",
-              "App.synth (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\stage.ts:180:23)",
-              "process.<anonymous> (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\app.ts:131:45)",
-              "Object.onceWrapper (node:events:510:26)",
-              "process.emit (node:events:390:28)",
-              "process.emit (node:domain:475:12)",
-              "process.emit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\source-map-support\\source-map-support.js:516:21)"
-            ]
-          }
-        ],
-        "/CdkStack/CDKMetadata/Condition": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "CDKMetadataAvailable",
-            "trace": [
-              "new MetadataResource (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\metadata-resource.ts:31:27)",
               "F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:166:5",
               "visit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:231:5)",
               "visit (F:\\personal\\lemon\\lemontime\\src\\node_modules\\monocdk\\lib\\core\\lib\\private\\synthesis.ts:227:5)",
