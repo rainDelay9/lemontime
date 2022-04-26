@@ -1,24 +1,22 @@
 import { Stack, StackProps, Construct } from 'monocdk';
 import * as apigw from 'monocdk/aws-apigateway';
 import * as lambda from 'monocdk/aws-lambda';
+import * as sqs from 'monocdk/aws-sqs';
 import * as path from 'path';
 
 export class LemonTimeStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
-        // The code that defines your stack goes here
-
-        // example resource
-        // const queue = new sqs.Queue(this, 'CdkQueue', {
-        //   visibilityTimeout: cdk.Duration.seconds(300)
-        // });
+        const incomingQueue = new sqs.Queue(this, 'incoming-post-sqs', {
+            queueName: 'incoming-post-requests-queue',
+        });
 
         // ROUTES
 
         // POST /timers
 
-        const postTimersBackend = new lambda.Function(
+        const postTimersBackendLambda = new lambda.Function(
             this,
             'post-timers-function',
             {
@@ -27,12 +25,17 @@ export class LemonTimeStack extends Stack {
                 code: lambda.Code.fromAsset(
                     path.join(__dirname, '../lambda/routes/timers/post')
                 ),
+                environment: {
+                    INCOMING_MESSAGES_QUEUE_URL: incomingQueue.queueUrl,
+                },
             }
         );
 
+        incomingQueue.grantSendMessages(postTimersBackendLambda);
+
         // GET /timers/{:id}
 
-        const getTimersBackend = new lambda.Function(
+        const getTimersBackendLambda = new lambda.Function(
             this,
             'get-timers-function',
             {
@@ -56,28 +59,7 @@ export class LemonTimeStack extends Stack {
             },
         });
 
-        /*   const userModel: apigateway.Model = api.addModel('UserModel', {
-         *         schema: {
-         *             type: apigateway.JsonSchemaType.OBJECT,
-         *             properties: {
-         *                 userId: {
-         *                     type: apigateway.JsonSchemaType.STRING
-         *                 },
-         *                 name: {
-         *                     type: apigateway.JsonSchemaType.STRING
-         *                 }
-         *             },
-         *             required: ['userId']
-         *         }
-         *     });
-         *     api.root.addResource('user').addMethod('POST',
-         *         new apigateway.LambdaIntegration(userLambda), {
-         *             requestModels: {
-         *                 'application/json': userModel
-         *             }
-         *         }
-         *     );
-         * */
+        // POST /timers body model
 
         const newTimerModel = api.addModel('NewTimerModel', {
             schema: {
@@ -103,7 +85,7 @@ export class LemonTimeStack extends Stack {
         const timers = api.root.addResource('timers');
         timers.addMethod(
             'POST',
-            new apigw.LambdaIntegration(postTimersBackend, {
+            new apigw.LambdaIntegration(postTimersBackendLambda, {
                 passthroughBehavior: apigw.PassthroughBehavior.NEVER,
             }),
             {
@@ -124,7 +106,7 @@ export class LemonTimeStack extends Stack {
 
         timers.addMethod(
             'GET',
-            new apigw.LambdaIntegration(getTimersBackend, {})
+            new apigw.LambdaIntegration(getTimersBackendLambda, {})
         );
 
         const deployment = new apigw.Deployment(this, 'Deployment', {
