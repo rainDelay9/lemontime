@@ -13,4 +13,4 @@ def respond(res):
 
 def handler(event, context):
     print(event)
-    return respond("Hello, World!")
+    return respond("Hello from post")

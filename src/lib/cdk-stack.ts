@@ -30,6 +30,20 @@ export class LemonTimeStack extends Stack {
             }
         );
 
+        // GET /timers/{:id}
+
+        const getTimersBackend = new lambda.Function(
+            this,
+            'get-timers-function',
+            {
+                runtime: lambda.Runtime.PYTHON_3_9,
+                handler: 'get.handler',
+                code: lambda.Code.fromAsset(
+                    path.join(__dirname, '../lambda/routes/timers/get')
+                ),
+            }
+        );
+
         // API GATEWAY
 
         const api = new apigw.RestApi(this, 'api-gateway', {
@@ -46,6 +60,11 @@ export class LemonTimeStack extends Stack {
         timers.addMethod(
             'POST',
             new apigw.LambdaIntegration(postTimersBackend, {})
+        );
+
+        timers.addMethod(
+            'GET',
+            new apigw.LambdaIntegration(getTimersBackend, {})
         );
 
         const deployment = new apigw.Deployment(this, 'Deployment', {
