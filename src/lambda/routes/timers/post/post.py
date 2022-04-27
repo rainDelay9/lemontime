@@ -7,9 +7,9 @@ import os
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table(os.environ['DDB_TABLE_NAME'])
 
-def respond(res):
+def respond(code, res):
     return {
-        'statusCode': '200',
+        'statusCode': code,
         'body': json.dumps(res),
         'headers': {
             'Content-Type': 'application/json',
@@ -25,7 +25,8 @@ def handler(event, context):
         'time': trigger_time,
         'url': body['url'],
     }
-    table.put_item(
-        Item=entry
-    )
-    return respond({"id": trigger_id})
+    try:
+        table.put_item(Item=entry)
+    except:
+        return respond(500, {"reason": "Server Error"})
+    return respond(200 ,{"id": trigger_id})

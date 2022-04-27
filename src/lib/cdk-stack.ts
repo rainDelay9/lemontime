@@ -44,6 +44,9 @@ export class LemonTimeStack extends Stack {
                 code: lambda.Code.fromAsset(
                     path.join(__dirname, '../lambda/routes/timers/get')
                 ),
+                environment: {
+                    DDB_TABLE_NAME: 'test_table',
+                },
             }
         );
 
@@ -110,7 +113,8 @@ export class LemonTimeStack extends Stack {
             }
         );
 
-        timers.addMethod(
+        const getResource = timers.addResource('{id}');
+        getResource.addMethod(
             'GET',
             new apigw.LambdaIntegration(getTimersBackendLambda, {})
         );
