@@ -1,16 +1,12 @@
 import { Stack, StackProps, Construct } from 'monocdk';
 import * as apigw from 'monocdk/aws-apigateway';
 import * as lambda from 'monocdk/aws-lambda';
-import * as sqs from 'monocdk/aws-sqs';
+import * as iam from 'monocdk/aws-iam';
 import * as path from 'path';
 
 export class LemonTimeStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
-
-        const incomingQueue = new sqs.Queue(this, 'incoming-post-sqs', {
-            queueName: 'incoming-post-requests-queue',
-        });
 
         // ROUTES
 
@@ -26,12 +22,16 @@ export class LemonTimeStack extends Stack {
                     path.join(__dirname, '../lambda/routes/timers/post')
                 ),
                 environment: {
-                    INCOMING_MESSAGES_QUEUE_URL: incomingQueue.queueUrl,
+                    DDB_TABLE_NAME: 'test_table',
                 },
             }
         );
 
-        incomingQueue.grantSendMessages(postTimersBackendLambda);
+        postTimersBackendLambda.role?.addManagedPolicy(
+            iam.ManagedPolicy.fromAwsManagedPolicyName(
+                'AmazonDynamoDBFullAccess'
+            )
+        );
 
         // GET /timers/{:id}
 
@@ -45,6 +45,12 @@ export class LemonTimeStack extends Stack {
                     path.join(__dirname, '../lambda/routes/timers/get')
                 ),
             }
+        );
+
+        getTimersBackendLambda.role?.addManagedPolicy(
+            iam.ManagedPolicy.fromAwsManagedPolicyName(
+                'AmazonDynamoDBFullAccess'
+            )
         );
 
         // API GATEWAY
