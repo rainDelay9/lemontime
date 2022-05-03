@@ -20,13 +20,13 @@ def handler(event, context):
     id = event['pathParameters']['id']
     try:
         item = table.get_item(
-        Key={
-            'id': id
-        }
+            Key={
+                'id': 'E#{}'.format(id),
+            }
         )
     except:
         return respond(500, {"reason": "Server Error"})
-        
+
     trigger = int(item['Item']['time'])
     now = int(time.time())
     return respond({"id": id, "time_left": max(trigger - now, 0)})
