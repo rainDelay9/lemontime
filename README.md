@@ -7,6 +7,10 @@
 1. Why not DocumentDB? (This is the better choice, but why am I not going for it?) - findOneAndAdd is the best for this (atomic OOTB), or even postgressql with array_append (although atomicity should be considered here)
 1. Problem with 1-second triggers
 
+## Thoughts
+
+1. Why are programatical timers bad?
+
 ## TODO
 
 1. checks for failure
@@ -15,3 +19,6 @@
 1. add lambda to distribute (+ queue)
 1. add lambda to fire url and update db status
 1. fix DynamoDB permissions
+1. implement fire time trigger
+1. deploy to ECS
+1. ssm param with failsafe
