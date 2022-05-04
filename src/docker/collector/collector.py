@@ -3,9 +3,16 @@ import boto3
 
 parameter_name = 'lemontime/trigger/latest'
 distribution_queue = 'LemonTime-Distribution-Queue'
+region = 'eu-central-1'
+account = '097585043572'
 
-ssm_client = boto3.client('ssm', region_name='eu-central-1')
-sqs_client = boto3.client('sqs', region_name='eu-central-1')
+ssm_client = boto3.client('ssm', region_name=region)
+sqs_client = boto3.client('sqs', region_name=region)
+
+queue_url = sqs_client.get_queue_url(
+    QueueName=distribution_queue,
+    QueueOwnerAWSAccountId=account,
+)
 
 # recap everything until now
 def get_latest_time():
@@ -14,7 +21,7 @@ def get_latest_time():
 
 def send_message(t):
     res = sqs_client.send_message(
-        QueueUel='whatever',
+        QueueUel=queue_url,
         MessageBody=str(t),
     )
     return res
