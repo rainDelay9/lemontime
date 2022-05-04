@@ -142,7 +142,7 @@ export class LemonTimeStack extends Stack {
             'Latest-Time-Triggered-Parameter',
             {
                 stringValue: secondsSinceEpoch.toString(),
-                parameterName: 'lemontime/trigger/latest',
+                parameterName: '/lemontime/trigger/latest',
                 type: ssm.ParameterType.STRING,
             }
         );
@@ -165,35 +165,25 @@ export class LemonTimeStack extends Stack {
             isDefault: true,
         });
 
-        const cluster = new ecs.Cluster(this, 'Trigger-Cluster');
-
-        const autoScalingGroup = new asg.AutoScalingGroup(this, 'ASG', {
+        const cluster = new ecs.Cluster(this, 'Trigger-Cluster', {
             vpc,
-            instanceType: new ec2.InstanceType('t2.micro'),
-            machineImage: ecs.EcsOptimizedImage.amazonLinux2(),
-            minCapacity: 1,
-            maxCapacity: 1,
         });
 
-        const capacityProvider = new ecs.AsgCapacityProvider(
+        const taskDefinition = new ecs.FargateTaskDefinition(
             this,
-            'AsgCapacityProvider',
-            {
-                autoScalingGroup,
-            }
-        );
-
-        cluster.addAsgCapacityProvider(capacityProvider);
-
-        const taskDefinition = new ecs.Ec2TaskDefinition(
-            this,
-            'Trigger-Task-Definition'
+            'Trigger-Task-Definition',
+            {}
         );
 
         taskDefinition.addContainer('Trigger-Container', {
             image: ecs.ContainerImage.fromAsset(
                 path.join(__dirname, '../docker/collector')
             ),
+            memoryLimitMiB: 500,
+            logging: new ecs.AwsLogDriver({
+                streamPrefix: '/some/prefix',
+                mode: ecs.AwsLogDriverMode.NON_BLOCKING,
+            }),
         });
 
         taskDefinition.taskRole?.addManagedPolicy(
@@ -212,9 +202,15 @@ export class LemonTimeStack extends Stack {
             )
         );
 
-        const triggerService = new ecs.Ec2Service(this, 'TriggerService', {
-            cluster,
+        const triggerService = new ecs.FargateService(this, 'Trigger-service', {
             taskDefinition,
+            cluster,
+            assignPublicIp: true,
         });
+
+        // const triggerService = new ecs.Ec2Service(this, 'TriggerService', {
+        //     cluster,
+        //     taskDefinition,
+        // });
     }
 }

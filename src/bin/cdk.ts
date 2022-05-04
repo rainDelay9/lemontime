@@ -17,6 +17,6 @@ new LemonTimeStack(app, 'CdkStack', {
     /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
     env: {
         account: '097585043572',
-        region: 'eu-central-1',
+        region: 'us-east-1',
     },
 });
