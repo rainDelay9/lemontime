@@ -2,11 +2,20 @@ import { Stack, StackProps, Construct } from 'monocdk';
 import * as apigw from 'monocdk/aws-apigateway';
 import * as lambda from 'monocdk/aws-lambda';
 import * as iam from 'monocdk/aws-iam';
+import * as sqs from 'monocdk/aws-sqs';
+import * as ssm from 'monocdk/aws-ssm';
+import * as ecs from 'monocdk/aws-ecs';
+import * as asg from 'monocdk/aws-autoscaling';
+import * as ec2 from 'monocdk/aws-ec2';
 import * as path from 'path';
 
 export class LemonTimeStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
+
+        ///////////////////////////////////////////
+        ////////////////// API ////////////////////
+        ///////////////////////////////////////////
 
         // ROUTES
 
@@ -121,6 +130,91 @@ export class LemonTimeStack extends Stack {
 
         const deployment = new apigw.Deployment(this, 'Deployment', {
             api,
+        });
+
+        ///////////////////////////////////////////
+        //////////////// BACKEND //////////////////
+        ///////////////////////////////////////////
+
+        const secondsSinceEpoch = Math.round(Date.now() / 1000);
+        const parameter = new ssm.StringParameter(
+            this,
+            'Latest-Time-Triggered-Parameter',
+            {
+                stringValue: secondsSinceEpoch.toString(),
+                parameterName: 'lemontime/trigger/latest',
+                type: ssm.ParameterType.STRING,
+            }
+        );
+
+        const distributionQueue = new sqs.Queue(
+            this,
+            'LemonTime-Distribution-Queue',
+            {
+                queueName: 'LemonTime-Distribution-Queue',
+            }
+        );
+
+        const fireQueue = new sqs.Queue(this, 'LemonTime-Fire-Queue', {
+            queueName: 'LemonTime-Fire-Queue',
+        });
+
+        // Trigger
+
+        const vpc = ec2.Vpc.fromLookup(this, 'VPC', {
+            isDefault: true,
+        });
+
+        const cluster = new ecs.Cluster(this, 'Trigger-Cluster');
+
+        const autoScalingGroup = new asg.AutoScalingGroup(this, 'ASG', {
+            vpc,
+            instanceType: new ec2.InstanceType('t2.micro'),
+            machineImage: ecs.EcsOptimizedImage.amazonLinux2(),
+            minCapacity: 1,
+            maxCapacity: 1,
+        });
+
+        const capacityProvider = new ecs.AsgCapacityProvider(
+            this,
+            'AsgCapacityProvider',
+            {
+                autoScalingGroup,
+            }
+        );
+
+        cluster.addAsgCapacityProvider(capacityProvider);
+
+        const taskDefinition = new ecs.Ec2TaskDefinition(
+            this,
+            'Trigger-Task-Definition'
+        );
+
+        taskDefinition.addContainer('Trigger-Container', {
+            image: ecs.ContainerImage.fromAsset(
+                path.join(__dirname, '../docker/collector')
+            ),
+        });
+
+        taskDefinition.taskRole?.addManagedPolicy(
+            iam.ManagedPolicy.fromManagedPolicyArn(
+                this,
+                'SSM-Managed-Policy',
+                'arn:aws:iam::aws:policy/AmazonSSMFullAccess'
+            )
+        );
+
+        taskDefinition.taskRole?.addManagedPolicy(
+            iam.ManagedPolicy.fromManagedPolicyArn(
+                this,
+                'SQS-Managed-Policy',
+                'arn:aws:iam::aws:policy/AmazonSQSFullAccess'
+            )
+        );
+
+        const triggerService = new ecs.Ec2Service(this, 'TriggerService', {
+            cluster,
+            taskDefinition,
         });
     }
 }
