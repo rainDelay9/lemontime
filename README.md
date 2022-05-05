@@ -15,10 +15,10 @@
 
 1. checks for failure
 1. delete on unsuccessful second write in post
-1. add queue and write
-1. add lambda to distribute (+ queue)
-1. add lambda to fire url and update db status
+1. add queue and write - DONE
+1. add lambda to distribute (+ queue) - DONE
+1. add lambda to fire url and update db status - DONE
 1. fix DynamoDB permissions
-1. implement fire time trigger
-1. deploy to ECS
-1. ssm param with failsafe
+1. implement fire time trigger - DONE
+1. deploy to ECS - DONE (fargate)
+1. ssm param with failsafe - DONE
