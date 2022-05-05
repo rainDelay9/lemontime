@@ -34,30 +34,39 @@ def update_latest(t):
     )
     return res
 
+latest = get_latest_time()
 
+# catch up to latest
+while latest > int(time.time()):
+    time.sleep(0.5)
+
+
+latest = get_latest_time()
+
+# catch up to now
 while True:
-    latest = get_latest_time()
-    print('latest: {}'.format(latest))
     now = int(time.time())
-    print('now: {}'.format(now))
     if latest == now:
+        print('catch up - updating latest when done: {}'.format(now))
+        update_latest(now)
         break
-    for t in range(latest, now):
-        print('sending message: {}'.format(t))
-        send_message(t)
-        print('updating latest: {}'.format(t))
-        update_latest(t)
 
+    latest = get_latest_time()
+    for t in range(latest+1, now+1):
+        print('catch up - sending message: {}'.format(t))
+        send_message(t)
+        latest = t
+        
+
+# increment seconds
 latest_time = get_latest_time()
-print('latest: {}'.format(latest_time))
 while True:
     now = int(time.time())
-    print('now: {}'.format(now))
     if now != latest_time:
-        print('sending message: {}'.format(now))
+        print('incremental - sending message: {}'.format(now))
         send_message(now)
         latest_time = now
-        print('updating latest: {}'.format(now))
+        print('incremental - updating latest: {}'.format(now))
         update_latest(now)
     time.sleep(0.2)
 

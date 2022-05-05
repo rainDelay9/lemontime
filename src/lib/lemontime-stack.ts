@@ -1,11 +1,11 @@
 import { Stack, StackProps, Construct } from 'monocdk';
 import * as apigw from 'monocdk/aws-apigateway';
 import * as lambda from 'monocdk/aws-lambda';
+import * as les from 'monocdk/aws-lambda-event-sources';
 import * as iam from 'monocdk/aws-iam';
 import * as sqs from 'monocdk/aws-sqs';
 import * as ssm from 'monocdk/aws-ssm';
 import * as ecs from 'monocdk/aws-ecs';
-import * as asg from 'monocdk/aws-autoscaling';
 import * as ec2 from 'monocdk/aws-ec2';
 import * as path from 'path';
 
@@ -136,7 +136,7 @@ export class LemonTimeStack extends Stack {
         //////////////// BACKEND //////////////////
         ///////////////////////////////////////////
 
-        const secondsSinceEpoch = Math.round(Date.now() / 1000);
+        const secondsSinceEpoch = Math.round(Date.now() / 1000 + 180); // this is 3 minutes from now for a new deploy
         const parameter = new ssm.StringParameter(
             this,
             'Latest-Time-Triggered-Parameter',
@@ -177,11 +177,11 @@ export class LemonTimeStack extends Stack {
 
         taskDefinition.addContainer('Trigger-Container', {
             image: ecs.ContainerImage.fromAsset(
-                path.join(__dirname, '../docker/collector')
+                path.join(__dirname, '../docker/trigger')
             ),
             memoryLimitMiB: 500,
             logging: new ecs.AwsLogDriver({
-                streamPrefix: '/some/prefix',
+                streamPrefix: '/lemontime/trigger',
                 mode: ecs.AwsLogDriverMode.NON_BLOCKING,
             }),
         });
@@ -208,9 +208,57 @@ export class LemonTimeStack extends Stack {
             assignPublicIp: true,
         });
 
-        // const triggerService = new ecs.Ec2Service(this, 'TriggerService', {
-        //     cluster,
-        //     taskDefinition,
-        // });
+        // Distribute
+
+        const distributeLambda = new lambda.Function(
+            this,
+            'distribute-function',
+            {
+                runtime: lambda.Runtime.PYTHON_3_9,
+                handler: 'distribute.handler',
+                code: lambda.Code.fromAsset(
+                    path.join(__dirname, '../lambda/backend/distribute')
+                ),
+                environment: {
+                    DDB_TABLE_NAME: 'test_table',
+                    FIRE_QUEUE_URL: fireQueue.queueUrl,
+                },
+            }
+        );
+
+        distributeLambda.role?.addManagedPolicy(
+            iam.ManagedPolicy.fromAwsManagedPolicyName(
+                'AmazonDynamoDBFullAccess'
+            )
+        );
+
+        const distributeEventSource = new les.SqsEventSource(distributionQueue);
+
+        distributeLambda.addEventSource(distributeEventSource);
+
+        fireQueue.grantSendMessages(distributeLambda);
+
+        // Fire
+
+        const fireLambda = new lambda.Function(this, 'fire-function', {
+            runtime: lambda.Runtime.PYTHON_3_9,
+            handler: 'fire.handler',
+            code: lambda.Code.fromAsset(
+                path.join(__dirname, '../lambda/backend/fire')
+            ),
+            environment: {
+                DDB_TABLE_NAME: 'test_table',
+            },
+        });
+
+        fireLambda.role?.addManagedPolicy(
+            iam.ManagedPolicy.fromAwsManagedPolicyName(
+                'AmazonDynamoDBFullAccess'
+            )
+        );
+
+        const fireEventSource = new les.SqsEventSource(fireQueue);
+
+        fireLambda.addEventSource(fireEventSource);
     }
 }
