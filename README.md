@@ -1,5 +1,9 @@
 # lemontime
 
+## Design
+
+![lemontime design diagram](assets/lemontime_design.png 'Design Diagram')
+
 ## Improvements
 
 1. DB
