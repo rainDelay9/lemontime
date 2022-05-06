@@ -2,7 +2,7 @@
 
 ## Design
 
-![lemontime design diagram](assets/lemontime_design.png 'Design Diagram')
+![lemontime design diagram](assets/lemontime_design.jpeg 'Design Diagram')
 
 ## Improvements
 
