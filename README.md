@@ -36,6 +36,37 @@ The backend is comprised of three main parts:
 1. Distribution lambda - This lambda function reads the timer entry for that specific second from DB, and if it exists writes a message for each timer that is scheduled to set off in that second to Fire SQS queue.
 1. Fire lambda - receives a pair of (id, url) as input from Fire queue, sends a POST message to the URL, and then updates the status of the timer entry with the id in DB.
 
+## Installation & Deployment
+
+Note that there's no real need to deploy to your personal account. I have a personal account and can deploy the solution there. (and have deployed it there) I have a 10$ limit on my account but testing the solution cost me 0.14$ so far so I think I can manage.
+
+### Prerequisites
+
+To deploy to your personal account you will need the follwing installed:
+
+-   A personal AWS account
+-   AWS CLI V2 - See [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) for installation instructions.
+-   AWS CDK - See [here](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) for installation instructions and prerequisites.
+-   An IAM user profile with credentials (access and secret keys) defined locally using `aws configure` - See [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) for profile creation instructions and [here](https://www.youtube.com/watch?v=vucdm8BWFu0) for IAM user creation instructions. For simplicity you can create a user with administrator priviliges, although **it is not a good security practice**.
+
+### Deployment
+
+To deploy navigate to `src` directory and use command
+
+```bash
+> cdk deploy --profile <your_profile> --context account=<your_account_id>
+```
+
+for example:
+
+```bash
+> cdk deploy --profile dev_profile --context account=0123456789
+```
+
+The CDK output will include your public API endpoint.
+
+**Alternatively, a stack with an API endpoint can be supplied on demand.**
+
 ## Notes, Questions, and Improvements
 
 ### Database Selection
@@ -82,55 +113,3 @@ Since the data held in the database is conducive to sharding, one approach can b
 -   Current solution may malfunction with immediate (0 hours, 0 minutes, 0 seconds) and 1-second (0 hours, 0 minutes, 1 second) timers. This is because these timers are valid, but can be saved to DB after the relevant second trigger already happened. This can be solved by checking if timer is a 0-second (resp. 1-second) timer in POST route lambda and then firing it imediately (resp. waiting one second and then firing it) by sending it as a message to Fire SQS queue.
 
 -   If some AWS services (like writing to DynamoDB on POST message) are delayed, for whatever reason, short timers (2-3 second ones) can be registered only after their respective second has passed. (since computing the exact second to fire is done prior to writing to DB for obvious reasons) A solution to this can be some cleanup application that runs in 1-minute intervals and checks for unfired timers from the past 90 seconds. This solution will require a small change in DB schema.
-
-## Installation & Deployment
-
-Note that there's no real need to deploy to your personal account. I have a personal account and can deploy the solution there. (and have deployed it there) I have a 10$ limit on my account but testing the solution cost me 0.14$ so far so I think I can manage.
-
-### Prerequisites
-
-To deploy to your personal account you will need the follwing installed:
-
--   A personal AWS account
--   AWS CLI V2 - See [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) for installation instructions.
--   AWS CDK - See [here](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) for installation instructions and prerequisites.
--   An IAM user profile with credentials (access and secret keys) defined locally using `aws configure` - See [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) for profile creation instructions and [here](https://www.youtube.com/watch?v=vucdm8BWFu0) for IAM user creation instructions. For simplicity you can create a user with administrator priviliges, although **it is not a good security practice**.
-
-### Deployment
-
-To deploy navigate to `src` directory and use command
-
-```bash
-> cdk deploy --profile <your_profile> --context account=<your_account_id>
-```
-
-for example:
-
-```bash
-> cdk deploy --profile dev_profile --context account=0123456789
-```
-
-The CDK output will include your public API endpoint.
-
-**Alternatively, a stack with an API endpoint can be supplied on demand.**
-
-## TODO
-
-1. checks for failure
-1. delete on unsuccessful second write in post
-1. add support for (0,0,0), (0,0,1) timers - **CANCELLED**
-1. Install & Deploy instructions - **DONE**
-1. take account as parameter - **DONE**
-1. add queue and write - **DONE**
-1. add lambda to distribute (+ queue) - **DONE**
-1. add lambda to fire url and update db status - **DONE**
-1. fix DynamoDB permissions - **DONE**
-1. fix SQS permissions - **DONE**
-1. fix SSM permissions - **DONE**
-1. implement fire time trigger - **DONE**
-1. deploy to ECS - **DONE** (fargate)
-1. ssm param with failsafe - **DONE**
-1. add DynamoDB table to CDK - **DONE**
-1. fix missed timers - **DONE**
-1. fix fargate lambda code to normal python - **DONE**
-1. refactor cdk to look normal - **DONE**
