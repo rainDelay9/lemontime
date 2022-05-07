@@ -2,7 +2,6 @@ import { Stack, StackProps, Construct } from 'monocdk';
 import * as apigw from 'monocdk/aws-apigateway';
 import * as lambda from 'monocdk/aws-lambda';
 import * as les from 'monocdk/aws-lambda-event-sources';
-import * as iam from 'monocdk/aws-iam';
 import * as sqs from 'monocdk/aws-sqs';
 import * as ssm from 'monocdk/aws-ssm';
 import * as ecs from 'monocdk/aws-ecs';
@@ -18,18 +17,59 @@ export class LemonTimeStack extends Stack {
         //////////////// Database /////////////////
         ///////////////////////////////////////////
 
-        const table = new dynamodb.Table(this, 'LemonTime-Table', {
+        const table = this.createDbTable();
+
+        ///////////////////////////////////////////
+        ////////////////// API ////////////////////
+        ///////////////////////////////////////////
+
+        this.createAPI(table);
+
+        ///////////////////////////////////////////
+        //////////////// BACKEND //////////////////
+        ///////////////////////////////////////////
+
+        this.createBackend(table);
+    }
+
+    createDbTable(): dynamodb.Table {
+        return new dynamodb.Table(this, 'LemonTime-Table', {
             tableName: 'timers',
             partitionKey: {
                 name: 'id',
                 type: dynamodb.AttributeType.STRING,
             },
         });
+    }
 
-        ///////////////////////////////////////////
-        ////////////////// API ////////////////////
-        ///////////////////////////////////////////
+    createAPI(table: dynamodb.Table) {
+        const { post: postLambda, get: getLambda } = this.createRoutes(table);
 
+        this.createAPIGateway(postLambda, getLambda);
+    }
+
+    createBackend(table: dynamodb.Table) {
+        // Infra
+
+        const { distributionQueue, fireQueue } = this.backendQueues();
+
+        // Trigger
+
+        this.createSecondsTrigger(table, distributionQueue);
+
+        // Distribute
+
+        this.createDistributionMechanism(table, distributionQueue, fireQueue);
+
+        // Fire
+
+        this.createFireMechanism(table, fireQueue);
+    }
+
+    createRoutes(table: dynamodb.Table): {
+        post: lambda.Function;
+        get: lambda.Function;
+    } {
         // ROUTES
 
         // POST /timers
@@ -70,6 +110,13 @@ export class LemonTimeStack extends Stack {
 
         table.grantReadData(getTimersBackendLambda);
 
+        return {
+            post: postTimersBackendLambda,
+            get: getTimersBackendLambda,
+        };
+    }
+
+    createAPIGateway(postLambda: lambda.Function, getLambda: lambda.Function) {
         // API GATEWAY
 
         const api = new apigw.RestApi(this, 'api-gateway', {
@@ -108,7 +155,7 @@ export class LemonTimeStack extends Stack {
         const timers = api.root.addResource('timers');
         timers.addMethod(
             'POST',
-            new apigw.LambdaIntegration(postTimersBackendLambda, {
+            new apigw.LambdaIntegration(postLambda, {
                 passthroughBehavior: apigw.PassthroughBehavior.NEVER,
             }),
             {
@@ -130,17 +177,30 @@ export class LemonTimeStack extends Stack {
         const getResource = timers.addResource('{id}');
         getResource.addMethod(
             'GET',
-            new apigw.LambdaIntegration(getTimersBackendLambda, {})
+            new apigw.LambdaIntegration(getLambda, {})
         );
 
         const deployment = new apigw.Deployment(this, 'Deployment', {
             api,
         });
+    }
 
-        ///////////////////////////////////////////
-        //////////////// BACKEND //////////////////
-        ///////////////////////////////////////////
+    backendQueues(): { distributionQueue: sqs.Queue; fireQueue: sqs.Queue } {
+        return {
+            distributionQueue: new sqs.Queue(
+                this,
+                'LemonTime-Distribution-Queue',
+                {
+                    queueName: 'LemonTime-Distribution-Queue',
+                }
+            ),
+            fireQueue: new sqs.Queue(this, 'LemonTime-Fire-Queue', {
+                queueName: 'LemonTime-Fire-Queue',
+            }),
+        };
+    }
 
+    createSecondsTrigger(table: dynamodb.Table, distributionQueue: sqs.Queue) {
         const secondsSinceEpoch = Math.round(Date.now() / 1000 + 180); // this is 3 minutes from now for a new deploy
         const parameter = new ssm.StringParameter(
             this,
@@ -151,20 +211,6 @@ export class LemonTimeStack extends Stack {
                 type: ssm.ParameterType.STRING,
             }
         );
-
-        const distributionQueue = new sqs.Queue(
-            this,
-            'LemonTime-Distribution-Queue',
-            {
-                queueName: 'LemonTime-Distribution-Queue',
-            }
-        );
-
-        const fireQueue = new sqs.Queue(this, 'LemonTime-Fire-Queue', {
-            queueName: 'LemonTime-Fire-Queue',
-        });
-
-        // Trigger
 
         const vpc = ec2.Vpc.fromLookup(this, 'VPC', {
             isDefault: true,
@@ -201,9 +247,13 @@ export class LemonTimeStack extends Stack {
             cluster,
             assignPublicIp: true,
         });
+    }
 
-        // Distribute
-
+    createDistributionMechanism(
+        table: dynamodb.Table,
+        distributionQueue: sqs.Queue,
+        fireQueue: sqs.Queue
+    ) {
         const distributeLambda = new lambda.Function(
             this,
             'distribute-function',
@@ -227,9 +277,9 @@ export class LemonTimeStack extends Stack {
         distributeLambda.addEventSource(distributeEventSource);
 
         fireQueue.grantSendMessages(distributeLambda);
+    }
 
-        // Fire
-
+    createFireMechanism(table: dynamodb.Table, fireQueue: sqs.Queue) {
         const fireLambda = new lambda.Function(this, 'fire-function', {
             runtime: lambda.Runtime.PYTHON_3_9,
             handler: 'fire.handler',

@@ -88,3 +88,6 @@ Since the data held in the database is conducive to sharding, one approach can b
 1. Install & Deploy instructions
 1. add DynamoDB table to CDK - DONE
 1. fix missed timers
+1. fix fargate lambda code to normal python
+1. refactor cdk to look normal - DONE
+1. take account as parameter
