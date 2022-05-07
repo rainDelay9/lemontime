@@ -55,7 +55,7 @@ export class LemonTimeStack extends Stack {
 
         // Trigger
 
-        this.createSecondsTrigger(table, distributionQueue);
+        this.createSecondsTrigger(distributionQueue);
 
         // Distribute
 
@@ -200,7 +200,7 @@ export class LemonTimeStack extends Stack {
         };
     }
 
-    createSecondsTrigger(table: dynamodb.Table, distributionQueue: sqs.Queue) {
+    createSecondsTrigger(distributionQueue: sqs.Queue) {
         const secondsSinceEpoch = Math.round(Date.now() / 1000 + 180); // this is 3 minutes from now for a new deploy
         const parameter = new ssm.StringParameter(
             this,
