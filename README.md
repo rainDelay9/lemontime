@@ -1,6 +1,6 @@
 # lemontime
 
-So... I may have took this a little too far... But it was fun and I got to use some new things I had never used before.
+So... I may have taken this a little too far... But it was fun and I got to use some new things I had never used before.
 
 If you are wondering why this took so long and looking for anyone to blame, see [here](https://www.youtube.com/watch?v=2Xq2fZCs2oU). A special thanks to the sick kid that decide to put my daughter's toys in his mouth.
 
@@ -21,18 +21,20 @@ The API is managed by a simple AWS REST API Gateway, with a lambda function for 
 
 1. POST route is responsible for creating new timers. POST route generates a new UUID (UUID4), and that is used to save the timer in two places in the DB:
 
-    a. An entry indexed by the timer ID, which contains the (epoch) time to fire, and a status.
-    b. An entry indexed by the time to fire which contains a map of "id -> url".
+    - An entry indexed by the timer ID, which contains the (epoch) time to fire, and a status.
+    - An entry indexed by the time to fire which contains a map of "id -> url".
 
-This double schema is intended to negate the need for expensive scan operations (equivalent to a SELECT \* WHERE... SQL query) when querying for elapsed timers. The purpose of negating this is twofold: It is cheaper, and it is (much) faster - pretty much constant query time no matter how many timers have been created.
+This double schema is intended to negate the need for expensive scan operations (equivalent to a SELECT \* WHERE... SQL query) when querying for elapsed timers. The purpose of negating this is twofold: It is cheaper, and it is (much) faster - pretty much constant query time no matter how many timers have been created. The Route's body is verified by API Gateway. (in case you're wondering why there are no structure checks in Lambda code)
+
+2. GET route simply returns the timer id, number of seconds remaining until fire, and a status (ACTIVE/SUCCESS) depending on if the timer has already fired.
 
 ### Backend
 
 The backend is comprised of three main parts:
 
-1. Trigger - This component, built from an AWS Fargate-backed python application, with an SSM parameter and an SQS queue (Distribution queue) is responsible for triggering url firing flow every second. It uses the SSM parameter for non-volatile storage of the latest second for which the flow was triggered (this is in case the application fails and there needs to be a firing of missed timers), where the messages sent to SQS queue are simply the current epoch second (e.g. 1651765337 for Thursday, May 5, 2022 3:42:17 PM GMT).
+1. Trigger - This component, built from an [AWS Fargate-backed](https://aws.amazon.com/fargate/) python application, with an SSM parameter and an SQS queue (Distribution queue) is responsible for triggering url firing flow every second. It uses the SSM parameter for non-volatile storage of the latest second for which the flow was triggered (this is in case the application fails and there needs to be a firing of missed timers), where the messages sent to SQS queue are simply the current epoch second (e.g. 1651765337 for Thursday, May 5, 2022 3:42:17 PM GMT).
 1. Distribution lambda - This lambda function reads the timer entry for that specific second from DB, and if it exists writes a message for each timer that is scheduled to set off in that second to Fire SQS queue.
-1. Fire lambda - receives a pair of (id, url) as input from Fire queue, send a POST message to the URL, and then updates the status of timer entry with id accordingly.
+1. Fire lambda - receives a pair of (id, url) as input from Fire queue, sends a POST message to the URL, and then updates the status of the timer entry with the id in DB.
 
 ## Notes, Questions, and Improvements
 
@@ -66,7 +68,7 @@ But now triggering can occur twice in the same second, and double fires will occ
 
 ### Scaling
 
-A good question to ask is "how well does this solution scale?". The answer? Very well. Usual bottlenecks for scaling are around DB access. If my DB only supports 100 writes per-second then I am going to be capped at handling 100 POST requests per-second. (or slightly less) DynamoDB can scale very well with increasing write demands. This solution also plays well with horizontal scaling.
+A good question to ask is "How well does this solution scale up?". The answer? Very well, albeit with some minor changes. Usual bottlenecks for scaling are around DB access. If my DB only supports 100 writes per-second then I am going to be capped at handling 100 POST requests per-second. (or slightly less) DynamoDB can scale very well with increasing write demands. This solution also plays well with horizontal scaling.
 
 The number of timers that can be triggered per-second in this solution is capped because of technical reasons:
 
@@ -75,7 +77,15 @@ The number of timers that can be triggered per-second in this solution is capped
 
 Since the data held in the database is conducive to sharding, one approach can be to split it between N tables, based on the modulo N of the ID. If we assume UUID4s are distributed evenly (fair assumption), then each shard will hold ~the same amount of timers, mitigating the first problem. This solution also has its share of problems, as changing N might prove tricky. (If id=17 and N changes from 9 to 11, then the shard changes from 8 to 6) For problem 2 quotas can be increased, or sharding can be split across accounts. In the end, if we are looking at supporting a truly gigantic number of timers, perhaps serverless is not the way for us, or at least Lambda is not. (Fargate is great)
 
+### Edge cases
+
+-   Current solution may malfunction with immediate (0 hours, 0 minutes, 0 seconds) and 1-second (0 hours, 0 minutes, 1 second) timers. This is because these timers are valid, but can be saved to DB after the relevant second trigger already happened. This can be solved by checking if timer is a 0-second (resp. 1-second) timer in POST route lambda and then firing it imediately (resp. waiting one second and then firing it) by sending it as a message to Fire SQS queue.
+
+-   If some AWS services (like writing to DynamoDB on POST message) are delayed, for whatever reason, short timers (2-3 second ones) can be registered only after their respective second has passed. (since computing the exact second to fire is done prior to writing to DB for obvious reasons) A solution to this can be some cleanup application that runs in 1-minute intervals and checks for unfired timers from the past 90 seconds. This solution will require a small change in DB schema.
+
 ## Installation & Deployment
+
+Note that there's no real need to deploy to your personal account. I have a personal account and can deploy the solution there. (and have deployed it there) I have a 10$ limit on my account but testing the solution cost me 0.14$ so far so I think I can manage.
 
 ### Prerequisites
 
@@ -100,13 +110,15 @@ for example:
 > cdk deploy --profile dev_profile --context account=0123456789
 ```
 
+The CDK output will include your public API endpoint.
+
 **Alternatively, a stack with an API endpoint can be supplied on demand.**
 
 ## TODO
 
 1. checks for failure
 1. delete on unsuccessful second write in post
-1. add support for (0,0,0), (0,0,1) timers
+1. add support for (0,0,0), (0,0,1) timers - **CANCELLED**
 1. Install & Deploy instructions - **DONE**
 1. take account as parameter - **DONE**
 1. add queue and write - **DONE**
