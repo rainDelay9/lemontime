@@ -1,5 +1,9 @@
 # lemontime
 
+So... I may have took this a little too far... But it was fun and I got to use some new things I had never used before.
+
+If you are wondering why this took so long and looking for anyone to blame, see [here](https://www.youtube.com/watch?v=2Xq2fZCs2oU). A special thanks to the sick kid that decide to put my daughter's toys in his mouth.
+
 ## Design
 
 The overall design hinges on two distinct parts:
