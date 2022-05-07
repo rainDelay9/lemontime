@@ -74,11 +74,17 @@ Since the data held in the database is conducive to sharding, one approach can b
 ## TODO
 
 1. checks for failure
+1. write tests
 1. delete on unsuccessful second write in post
 1. add queue and write - DONE
 1. add lambda to distribute (+ queue) - DONE
 1. add lambda to fire url and update db status - DONE
-1. fix DynamoDB permissions
+1. fix DynamoDB permissions - DONE
+1. fix SQS permissions - DONE
+1. fix SSM permissions - DONE
 1. implement fire time trigger - DONE
 1. deploy to ECS - DONE (fargate)
 1. ssm param with failsafe - DONE
+1. Install & Deploy instructions
+1. add DynamoDB table to CDK - DONE
+1. fix missed timers

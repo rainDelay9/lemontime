@@ -7,11 +7,24 @@ import * as sqs from 'monocdk/aws-sqs';
 import * as ssm from 'monocdk/aws-ssm';
 import * as ecs from 'monocdk/aws-ecs';
 import * as ec2 from 'monocdk/aws-ec2';
+import * as dynamodb from 'monocdk/aws-dynamodb';
 import * as path from 'path';
 
 export class LemonTimeStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
+
+        ///////////////////////////////////////////
+        //////////////// Database /////////////////
+        ///////////////////////////////////////////
+
+        const table = new dynamodb.Table(this, 'LemonTime-Table', {
+            tableName: 'timers',
+            partitionKey: {
+                name: 'id',
+                type: dynamodb.AttributeType.STRING,
+            },
+        });
 
         ///////////////////////////////////////////
         ////////////////// API ////////////////////
@@ -31,16 +44,12 @@ export class LemonTimeStack extends Stack {
                     path.join(__dirname, '../lambda/routes/timers/post')
                 ),
                 environment: {
-                    DDB_TABLE_NAME: 'test_table',
+                    DDB_TABLE_NAME: table.tableName,
                 },
             }
         );
 
-        postTimersBackendLambda.role?.addManagedPolicy(
-            iam.ManagedPolicy.fromAwsManagedPolicyName(
-                'AmazonDynamoDBFullAccess'
-            )
-        );
+        table.grantReadWriteData(postTimersBackendLambda);
 
         // GET /timers/{:id}
 
@@ -54,16 +63,12 @@ export class LemonTimeStack extends Stack {
                     path.join(__dirname, '../lambda/routes/timers/get')
                 ),
                 environment: {
-                    DDB_TABLE_NAME: 'test_table',
+                    DDB_TABLE_NAME: table.tableName,
                 },
             }
         );
 
-        getTimersBackendLambda.role?.addManagedPolicy(
-            iam.ManagedPolicy.fromAwsManagedPolicyName(
-                'AmazonDynamoDBFullAccess'
-            )
-        );
+        table.grantReadData(getTimersBackendLambda);
 
         // API GATEWAY
 
@@ -186,21 +191,10 @@ export class LemonTimeStack extends Stack {
             }),
         });
 
-        taskDefinition.taskRole?.addManagedPolicy(
-            iam.ManagedPolicy.fromManagedPolicyArn(
-                this,
-                'SSM-Managed-Policy',
-                'arn:aws:iam::aws:policy/AmazonSSMFullAccess'
-            )
-        );
+        parameter.grantRead(taskDefinition.taskRole);
+        parameter.grantWrite(taskDefinition.taskRole);
 
-        taskDefinition.taskRole?.addManagedPolicy(
-            iam.ManagedPolicy.fromManagedPolicyArn(
-                this,
-                'SQS-Managed-Policy',
-                'arn:aws:iam::aws:policy/AmazonSQSFullAccess'
-            )
-        );
+        distributionQueue.grantSendMessages(taskDefinition.taskRole);
 
         const triggerService = new ecs.FargateService(this, 'Trigger-service', {
             taskDefinition,
@@ -220,17 +214,13 @@ export class LemonTimeStack extends Stack {
                     path.join(__dirname, '../lambda/backend/distribute')
                 ),
                 environment: {
-                    DDB_TABLE_NAME: 'test_table',
+                    DDB_TABLE_NAME: table.tableName,
                     FIRE_QUEUE_URL: fireQueue.queueUrl,
                 },
             }
         );
 
-        distributeLambda.role?.addManagedPolicy(
-            iam.ManagedPolicy.fromAwsManagedPolicyName(
-                'AmazonDynamoDBFullAccess'
-            )
-        );
+        table.grantReadData(distributeLambda);
 
         const distributeEventSource = new les.SqsEventSource(distributionQueue);
 
@@ -247,15 +237,11 @@ export class LemonTimeStack extends Stack {
                 path.join(__dirname, '../lambda/backend/fire')
             ),
             environment: {
-                DDB_TABLE_NAME: 'test_table',
+                DDB_TABLE_NAME: table.tableName,
             },
         });
 
-        fireLambda.role?.addManagedPolicy(
-            iam.ManagedPolicy.fromAwsManagedPolicyName(
-                'AmazonDynamoDBFullAccess'
-            )
-        );
+        table.grantReadWriteData(fireLambda);
 
         const fireEventSource = new les.SqsEventSource(fireQueue);
 
