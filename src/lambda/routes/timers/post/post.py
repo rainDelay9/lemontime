@@ -1,8 +1,10 @@
 import uuid
 import boto3
+import botocore
 import json
 import time
 import os
+from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
 
 dynamodb = boto3.resource('dynamodb')
@@ -41,13 +43,11 @@ def handler(event, context):
 
     try:
         table.put_item(Item=catalog_entry)
-        #TODO: check success
     except:
         return respond(500, {"reason": "Server Error"})
 
     try:
-        #TODO: add delete
-        result = table.update_item(
+        table.update_item(
             Key={
                 'id': 'T#{}'.format(trigger_time)
             },
@@ -57,12 +57,12 @@ def handler(event, context):
                 ':url': body['url']
             }
         )
-        print(result)
-    except Exception as e:
+    except ClientError as e:
         print(e)
          #create
         timer_entry = {
             'id': 'T#{}'.format(trigger_time),
+            'status': 'PENDING',
             'timers': {
                 trigger_id: body['url']
             },
@@ -71,6 +71,9 @@ def handler(event, context):
             table.put_item(Item=timer_entry)
         except Exception as e:
             print(e)
-            return respond(500, {"reason": "Server Error"})   
+            return respond(500, {"reason": "Server Error"})
+    except Exception as e: #Some other exception occured
+        print(e)
+        return respond(500, {"reason": "Server Error"})
     
     return respond(200 ,{"id": trigger_id})

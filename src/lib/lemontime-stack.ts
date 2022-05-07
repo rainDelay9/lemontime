@@ -78,6 +78,7 @@ export class LemonTimeStack extends Stack {
             this,
             'post-timers-function',
             {
+                functionName: 'LemonTime-Timers-POST',
                 runtime: lambda.Runtime.PYTHON_3_9,
                 handler: 'post.handler',
                 code: lambda.Code.fromAsset(
@@ -97,6 +98,7 @@ export class LemonTimeStack extends Stack {
             this,
             'get-timers-function',
             {
+                functionName: 'LemonTime-Timers-GET',
                 runtime: lambda.Runtime.PYTHON_3_9,
                 handler: 'get.handler',
                 code: lambda.Code.fromAsset(
@@ -258,6 +260,7 @@ export class LemonTimeStack extends Stack {
             this,
             'distribute-function',
             {
+                functionName: 'LemonTime-Distribute',
                 runtime: lambda.Runtime.PYTHON_3_9,
                 handler: 'distribute.handler',
                 code: lambda.Code.fromAsset(
@@ -270,7 +273,7 @@ export class LemonTimeStack extends Stack {
             }
         );
 
-        table.grantReadData(distributeLambda);
+        table.grantReadWriteData(distributeLambda);
 
         const distributeEventSource = new les.SqsEventSource(distributionQueue);
 
@@ -281,6 +284,7 @@ export class LemonTimeStack extends Stack {
 
     createFireMechanism(table: dynamodb.Table, fireQueue: sqs.Queue) {
         const fireLambda = new lambda.Function(this, 'fire-function', {
+            functionName: 'LemonTime-Fire',
             runtime: lambda.Runtime.PYTHON_3_9,
             handler: 'fire.handler',
             code: lambda.Code.fromAsset(

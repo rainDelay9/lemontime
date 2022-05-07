@@ -34,10 +34,27 @@ def handler(event, context):
                 },
                 ProjectionExpression ='timers',
             )
-            if 'Item' in response:
+            if 'Item' in response: #timers exist for this second
                 timers = response['Item']['timers']
                 for key in timers:
                     send_url_to_queue(key, timers[key])
-        except:
+
+                try: #update timers to TAKEN
+                    table.update_item(
+                        Key={
+                            'id': 'T#{}'.format(trigger)
+                        },
+                        UpdateExpression="SET #atr = :s",
+                        ExpressionAttributeNames = { "#atr" : 'status' },
+                        ExpressionAttributeValues={
+                            ':s': 'TAKEN'
+                        }
+                    )
+                except Exception as e:
+                    print(e)
+                    print('Could not update item {} to TAKEN'.format(trigger))
+        except Exception as e:
+            print(e)
             print('Could not get item {}'.format(trigger))
+
     return respond(200, {"status": "success"})
