@@ -16,8 +16,9 @@ The infrastructure is built with [AWS CDK](https://aws.amazon.com/cdk/) in Types
 The API is managed by a simple AWS REST API Gateway, with a lambda function for handling each route.
 
 1. POST route is responsible for creating new timers. POST route generates a new UUID (UUID4), and that is used to save the timer in two places in the DB:
-   a. An entry indexed by the timer ID, which contains the (epoch) time to fire, and a status.
-   b. An entry indexed by the time to fire which contains a map of "id -> url".
+
+    a. An entry indexed by the timer ID, which contains the (epoch) time to fire, and a status.
+    b. An entry indexed by the time to fire which contains a map of "id -> url".
 
 This double schema is intended to negate the need for expensive scan operations (equivalent to a SELECT \* WHERE... SQL query) when querying for elapsed timers. The purpose of negating this is twofold: It is cheaper, and it is (much) faster - pretty much constant query time no matter how many timers have been created.
 
@@ -26,7 +27,7 @@ This double schema is intended to negate the need for expensive scan operations 
 The backend is comprised of three main parts:
 
 1. Trigger - This component, built from an AWS Fargate-backed python application, with an SSM parameter and an SQS queue (Distribution queue) is responsible for triggering url firing flow every second. It uses the SSM parameter for non-volatile storage of the latest second for which the flow was triggered (this is in case the application fails and there needs to be a firing of missed timers), where the messages sent to SQS queue are simply the current epoch second (e.g. 1651765337 for Thursday, May 5, 2022 3:42:17 PM GMT).
-1. Distribution lambda - This lambda function reads the timer entry for that specific second, and if it exists writes a message for each timer that is scheduled to set off in that second to Fire SQS queue.
+1. Distribution lambda - This lambda function reads the timer entry for that specific second from DB, and if it exists writes a message for each timer that is scheduled to set off in that second to Fire SQS queue.
 1. Fire lambda - receives a pair of (id, url) as input from Fire queue, send a POST message to the URL, and then updates the status of timer entry with id accordingly.
 
 ## Notes, Questions, and Improvements
@@ -58,6 +59,17 @@ while True:
 ```
 
 But now triggering can occur twice in the same second, and double fires will occur. Note that no matter how much time we choose to sleep, or how long the triggering mechanism takes, we will always be either below or above one second, each with its problems. It would appear as though this problem is not as trivial as would seem, and therefore has a more complex solution in code.
+
+### Scaling
+
+A good question to ask is "how well does this solution scale?". The answer? Very well. Usual bottlenecks for scaling are around DB access. If my DB only supports 100 writes per-second then I am going to be capped at handling 100 POST requests per-second. (or slightly less) DynamoDB can scale very well with increasing write demands. This solution also plays well with horizontal scaling.
+
+The number of timers that can be triggered per-second in this solution is capped because of technical reasons:
+
+1. Each DynamoDB attribute can hold no more than 400KB of data. If the average entry is about 100KB long, then no more than 4000 timers can go off every second.
+1. Lambda function concurrency has strict quotas, of ~6000 per account per second. This is less of a problem, as the average post request takes much less than a second. (Except the first one because of cold starts)
+
+Since the data held in the database is conducive to sharding, one approach can be to split it between N tables, based on the modulo N of the ID. If we assume UUID4 are distributed evenly (fair assumption), then each shard will hold ~the same amount of timers, mitigating the first problem. This solution also has its share of problems, as changing N might prove tricky. (If id=17 and N changes from 9 to 11, then the shard changes from 8 to 6) For problem 2 quotas can be increased, or sharding can be split across accounts.
 
 ## TODO
 
