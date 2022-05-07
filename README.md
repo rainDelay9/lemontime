@@ -81,6 +81,9 @@ Since the data held in the database is conducive to sharding, one approach can b
 
 1. checks for failure
 1. delete on unsuccessful second write in post
+1. Install & Deploy instructions
+1. take account as parameter
+1. add support for (0,0,0), (0,0,1) timers
 1. add queue and write - **DONE**
 1. add lambda to distribute (+ queue) - **DONE**
 1. add lambda to fire url and update db status - **DONE**
@@ -90,10 +93,7 @@ Since the data held in the database is conducive to sharding, one approach can b
 1. implement fire time trigger - **DONE**
 1. deploy to ECS - **DONE** (fargate)
 1. ssm param with failsafe - **DONE**
-1. Install & Deploy instructions
 1. add DynamoDB table to CDK - **DONE**
-1. fix missed timers
+1. fix missed timers - **DONE**
 1. fix fargate lambda code to normal python - **DONE**
 1. refactor cdk to look normal - **DONE**
-1. take account as parameter
-1. add support for (0,0,0), (0,0,1) timers
