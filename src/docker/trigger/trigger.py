@@ -34,40 +34,47 @@ def update_latest(t):
     )
     return res
 
-latest = get_latest_time()
 
-# catch up to latest
-while latest > int(time.time()):
-    time.sleep(0.5)
-
-
-latest = get_latest_time()
-
-# catch up to now
-while True:
-    now = int(time.time())
-    if latest == now:
-        print('catch up - updating latest when done: {}'.format(now))
-        update_latest(now)
-        break
-
+def run():
+    # catch up to latest (if latest > now) - This can happen one new stack deploy
     latest = get_latest_time()
-    for t in range(latest+1, now+1):
-        print('catch up - sending message: {}'.format(t))
-        send_message(t)
-        latest = t
-        
+    while latest > int(time.time()):
+        time.sleep(0.5)
 
-# increment seconds
-latest_time = get_latest_time()
-while True:
-    now = int(time.time())
-    if now != latest_time:
-        print('incremental - sending message: {}'.format(now))
-        send_message(now)
-        latest_time = now
-        print('incremental - updating latest: {}'.format(now))
-        update_latest(now)
-    time.sleep(0.2)
+    # catch up to now (if latest < now) - This can happen after failure
+    latest = get_latest_time()
+    while True:
+        now = int(time.time())
+        if latest == now:
+            print('catch up - updating latest when done: {}'.format(now))
+            update_latest(now)
+            break
 
+        latest = get_latest_time()
+        for t in range(latest+1, now+1):
+            print('catch up - sending message: {}'.format(t))
+            send_message(t)
+            latest = t
+            
+
+    # increment seconds
+    latest = get_latest_time()
+    while True:
+        now = int(time.time())
+        if now > latest:
+            # this is a loop in case some AWS calls have taken too long and we need to catch up
+            for t in range(latest + 1, now + 1): 
+                print('incremental - sending message: {}'.format(now))
+                send_message(now)
+                latest = now
+                print('incremental - updating latest: {}'.format(now))
+                update_latest(now)
+        time.sleep(0.2)
+
+if __name__ == "__main__":
+    while True:
+        try:
+            run()
+        except Exception as e:
+            print(e)
 

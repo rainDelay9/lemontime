@@ -71,6 +71,12 @@ The number of timers that can be triggered per-second in this solution is capped
 
 Since the data held in the database is conducive to sharding, one approach can be to split it between N tables, based on the modulo N of the ID. If we assume UUID4s are distributed evenly (fair assumption), then each shard will hold ~the same amount of timers, mitigating the first problem. This solution also has its share of problems, as changing N might prove tricky. (If id=17 and N changes from 9 to 11, then the shard changes from 8 to 6) For problem 2 quotas can be increased, or sharding can be split across accounts. In the end, if we are looking at supporting a truly gigantic number of timers, perhaps serverless is not the way for us, or at least Lambda is not. (Fargate is great)
 
+## Installation & Deployment
+
+### Prerequisites
+
+### Deployment
+
 ## TODO
 
 1. checks for failure
@@ -87,7 +93,7 @@ Since the data held in the database is conducive to sharding, one approach can b
 1. Install & Deploy instructions
 1. add DynamoDB table to CDK - **DONE**
 1. fix missed timers
-1. fix fargate lambda code to normal python
+1. fix fargate lambda code to normal python - **DONE**
 1. refactor cdk to look normal - **DONE**
 1. take account as parameter
 1. add support for (0,0,0), (0,0,1) timers
