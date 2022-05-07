@@ -75,15 +75,36 @@ Since the data held in the database is conducive to sharding, one approach can b
 
 ### Prerequisites
 
+To deploy to your personal account you will need the follwing installed:
+
+-   A personal AWS account
+-   AWS CLI V2 - See [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) for installation instructions.
+-   AWS CDK - See [here](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) for installation instructions and prerequisites.
+-   An IAM user profile with credentials (access and secret keys) defined locally using `aws configure` - See [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) for profile creation instructions and [here](https://www.youtube.com/watch?v=vucdm8BWFu0) for IAM user creation instructions. For simplicity you can create a user with administrator priviliges, although **it is not a good security practice**.
+
 ### Deployment
+
+To deploy navigate to `src` directory and use command
+
+```bash
+> cdk deploy --profile <your_profile> --context account=<your_account_id>
+```
+
+for example:
+
+```bash
+> cdk deploy --profile dev_profile --context account=0123456789
+```
+
+**Alternatively, a stack with an API endpoint can be supplied on demand.**
 
 ## TODO
 
 1. checks for failure
 1. delete on unsuccessful second write in post
-1. Install & Deploy instructions
-1. take account as parameter
 1. add support for (0,0,0), (0,0,1) timers
+1. Install & Deploy instructions - **DONE**
+1. take account as parameter - **DONE**
 1. add queue and write - **DONE**
 1. add lambda to distribute (+ queue) - **DONE**
 1. add lambda to fire url and update db status - **DONE**
