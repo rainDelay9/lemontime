@@ -8,7 +8,7 @@ If you are wondering why this took so long and looking for anyone to blame, see 
 
 The overall design hinges on two distinct parts:
 
-1. API - This includes a REST API Gateway, backed by two lambda functions, controlling the POST and GET routes.
+1. API - This includes a REST API Gateway, backed by two lambda functions, controlling the POST and GET requests for /timers route.
 1. Backend - This includes everything that is responsible for sending a POST message when a timer elapses.
 
 The infrastructure is built with [AWS CDK](https://aws.amazon.com/cdk/) in Typescript, the actual pieces of code (4 lambdas and one script) are written in python, and a simple Dockerfile is used for Fargate.
