@@ -71,7 +71,7 @@ The CDK output will include your public API endpoint.
 
 ### Database Selection
 
-Why NoSQL? It is true that currently we are working with a fixed schema, allowing for both SQL and Non-SQL databases, but there doesn't seem to be any need now or in the future, for and oin operations. Thus, a simple read-write storage is good enough.
+Why NoSQL? It is true that currently we are working with a fixed schema, allowing for both SQL and Non-SQL databases, but there doesn't seem to be any need now or in the future, for join operations. Thus, a simple read-write storage is good enough. Other options exist, of course.
 
 Why DynamoDB? First, if you plan your schema correctly, and expect many distinct keys (which we are), DynamoDB offers incredibly fast query times, with super-high availability.
 
