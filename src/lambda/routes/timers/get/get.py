@@ -22,12 +22,21 @@ def handler(event, context):
         item = table.get_item(
             Key={
                 'id': 'E#{}'.format(id),
-            }
+            },
+            AttributesToGet=[
+                'time',
+                'status'
+            ]
         )
+        if not 'Item' in item:
+            return respond(404, {'reason': 'No such timer'})
+
+        trigger = int(item['Item']['time'])
+        now = int(time.time())
+        status = item['Item']['status']
+        
+        return respond(200, {'id': id, 'status': status, 'time_left': max(trigger - now, 0)})
+
     except:
         return respond(500, {'reason': 'Server Error'})
 
-    trigger = int(item['Item']['time'])
-    now = int(time.time())
-    status = item['Item']['status']
-    return respond(200, {'id': id, 'status': status, 'time_left': max(trigger - now, 0)})
