@@ -46,7 +46,7 @@ To deploy to your personal account you will need the follwing installed:
 
 -   A personal AWS account
 -   AWS CLI V2 - See [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) for installation instructions.
--   AWS CDK - See [here](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) for installation instructions and prerequisites.
+-   AWS CDK - See [here](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) for installation instructions and prerequisites. You are probably also going to need to [bootstrap](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html) your account, unless you have deployed stacks using CDK before.
 -   An IAM user profile with credentials (access and secret keys) defined locally using `aws configure` - See [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) for profile creation instructions and [here](https://www.youtube.com/watch?v=vucdm8BWFu0) for IAM user creation instructions. For simplicity you can create a user with administrator priviliges, although **it is not a good security practice**.
 
 ### Deployment
