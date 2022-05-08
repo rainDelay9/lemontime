@@ -22,20 +22,20 @@ def handler(event, context):
     for record in records:
         data = json.loads(record['body'])
         res = http.request('POST', data['url'], headers={}, body={})
-        print(res.read())
-        #try:
-        response = table.update_item(
-            Key={
-                'id': 'E#{}'.format(data['id'])
-            },
-            UpdateExpression='SET #atr = :s',
-            ExpressionAttributeValues={
-                ':s': 'SUCCESS'
-            },
-            ExpressionAttributeNames={
-                '#atr': 'status'
-            }
-        )
-        #except:
-        #    print('Could not update item status (id: {})'.format(data['id']))
+        print(res.status)
+        try:
+            response = table.update_item(
+                Key={
+                    'id': 'E#{}'.format(data['id'])
+                },
+                UpdateExpression='SET #atr = :s',
+                ExpressionAttributeValues={
+                    ':s': 'SUCCESS'
+                },
+                ExpressionAttributeNames={
+                    '#atr': 'status'
+                }
+            )
+        except:
+            print('Could not update item status (id: {})'.format(data['id']))
     return respond(200, {"status": "success"})
