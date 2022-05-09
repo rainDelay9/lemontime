@@ -20,9 +20,14 @@ def handler(event, context):
     print(event)
     records = event['Records']
     for record in records:
-        data = json.loads(record['body'])
-        res = http.request('POST', data['url'], headers={}, body={})
-        print(res.status)
+        status = 'SUCCESS'
+        try:
+            data = json.loads(record['body'])
+            res = http.request('POST', data['url'], headers={}, body={})
+            print(res.status)
+        except:
+            print('POST request failed... continuing')
+            status = 'ERROR'
         try:
             response = table.update_item(
                 Key={
@@ -30,7 +35,7 @@ def handler(event, context):
                 },
                 UpdateExpression='SET #atr = :s',
                 ExpressionAttributeValues={
-                    ':s': 'SUCCESS'
+                    ':s': status
                 },
                 ExpressionAttributeNames={
                     '#atr': 'status'
