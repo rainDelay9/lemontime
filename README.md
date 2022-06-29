@@ -38,7 +38,7 @@ The backend is comprised of three main parts:
 
 ## Installation & Deployment
 
-Note that there's no real need to deploy to your personal account. I have a personal account and can deploy the solution there. (and have deployed it there) I have a 10$ limit on my account but testing the solution cost me 0.14$ so far so I think I can manage.
+Note that there's no real need to deploy to your personal account. I have a personal account and can deploy the solution there. (and have deployed it there) I have a 10USD limit on my account but testing the solution cost me 0.14USD so far so I think I can manage.
 
 ### Prerequisites
 
